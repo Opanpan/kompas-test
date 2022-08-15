@@ -5,7 +5,7 @@
         <h2>Diari Jajan Februari</h2>
       </div>
       <div class="col-12">
-        <h5>Pengeluaran Bulan Ini</h5>
+        <h5>Pengeluaran Bulan Ini Rp {{ totalPengeluaran }}</h5>
       </div>
     </div>
 
@@ -15,38 +15,37 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col">
-        <div class="card" style="width: 18rem">
-          <!-- <img src="..." class="card-img-top" alt="..." /> -->
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
+      <div class="col" v-for="(item, i) in items" :key="i">
+        <card-item :item="item" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
+import CardItem from '../components/CardItem.vue';
 
 export default {
   name: 'HomePage',
+  components: {
+    CardItem,
+  },
   data() {
     return {
       status: 'faild',
     };
   },
   computed: {
-        ...mapState('storeItems', ['items']),
-
-  }
+    ...mapState('storeItems', ['items', 'totalPengeluaran']),
+  },
+  created() {
+    this.getListItem();
+  },
+  methods: {
+    ...mapActions('storeItems', ['getListItem']),
+  },
 };
 </script>
 
