@@ -1,6 +1,6 @@
 const state = {
   items: [],
-  totalPengeluaran: 0,
+  groupItems: [],
 };
 
 const mutations = {
@@ -20,8 +20,8 @@ const mutations = {
           groupingItem[groupingItem.length - 1].push(data[i]);
         }
       }
-      state.totalPengeluaran += data[i].pengeluaran;
     }
+
     state.items = groupingItem;
   },
   setAddItem(state, data) {
@@ -36,8 +36,22 @@ const mutations = {
       state.items.push([]);
       state.items[state.items.length - 1].push(data);
     }
-    state.totalPengeluaran += data.pengeluaran;
   },
+  groupingItems(state) {
+    for (let i = 0; i < state.items.length; i += 1) {
+      if (state.groupItems.length !== 0) {
+        if (!state.groupItems.includes(state.items[i][0].tanggal.slice(3, state.items[i][0].tanggal.length))) {
+          state.groupItems.push(
+            state.items[i][0].tanggal.slice(3, state.items[i][0].tanggal.length)
+          );
+        }
+      } else {
+        state.groupItems.push(
+          state.items[i][0].tanggal.slice(3, state.items[i][0].tanggal.length)
+        );
+      }
+    }
+  }
 };
 
 const actions = {
@@ -47,6 +61,7 @@ const actions = {
         .then((res) => res.json())
         .then((data) => {
           commit('setItems', data);
+          commit('groupingItems')
         });
     } catch (error) {
       console.log(error);
@@ -54,6 +69,7 @@ const actions = {
   },
   actionAddItem({ commit }, req) {
     commit('setAddItem', req);
+    commit('groupingItems')
   },
 };
 
