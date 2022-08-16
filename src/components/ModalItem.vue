@@ -4,17 +4,18 @@
       type="button"
       class="btn custom-btn"
       data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
+      data-bs-target="#modalItem"
     >
       TAMBAH ITEM
     </button>
 
     <div
       class="modal fade"
-      id="exampleModal"
+      id="modalItem"
+      data-bs-backdrop="static"
       tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
+      aria-labelledby="modalItemLabel"
+      ref="modalItem"
     >
       <div class="modal-dialog">
         <div class="modal-content">
@@ -25,6 +26,7 @@
               class="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              @click="resetData"
             ></button>
           </div>
           <div class="modal-body">
@@ -39,7 +41,7 @@
                 v-model="name"
                 class="form-control"
                 id="name"
-                placeholder="Input Nama Barang..."
+                placeholder="Nama Barang..."
               />
             </div>
 
@@ -54,7 +56,7 @@
                 type="number"
                 class="form-control"
                 id="harga"
-                placeholder="Input Harga Barang..."
+                placeholder="Harga Barang..."
               />
             </div>
           </div>
@@ -63,11 +65,13 @@
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
+              @click="resetData"
             >
               Batal
             </button>
             <button
               :disabled="!isFormValidated"
+              @click="submitData"
               type="button"
               class="btn btn-primary custom-btn"
             >
@@ -81,17 +85,62 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import { Modal } from 'bootstrap';
+
 export default {
   name: 'ModalItem',
   data() {
     return {
       name: '',
       price: '',
+      monthNames: [
+        'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember',
+      ],
+      modal: null,
     };
+  },
+  mounted() {
+    this.modal = new Modal(this.$refs.modalItem);
   },
   computed: {
     isFormValidated() {
       return this.name !== '' && this.price !== '';
+    },
+  },
+  methods: {
+    ...mapActions('storeItems', ['actionAddItem']),
+
+    resetData() {
+      this.name = '';
+      this.price = '';
+    },
+
+    submitData() {
+      const currentDate = new Date();
+
+      const req = {
+        jam: '',
+        tanggal: `${currentDate.getDate()} ${
+          this.monthNames[currentDate.getMonth()]
+        } ${currentDate.getFullYear()}`,
+        nama: this.name,
+        pengeluaran: this.price,
+      };
+      this.actionAddItem(req);
+      this.resetData();
+      this.modal.hide();
     },
   },
 };
@@ -102,6 +151,7 @@ export default {
   background-color: blueviolet !important;
   border-color: blueviolet !important;
   color: white !important;
+  border-radius: 0 !important;
 }
 .custom-btn:hover {
   background-color: rgb(91, 26, 153) !important;

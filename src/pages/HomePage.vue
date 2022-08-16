@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <h2>Diari Jajan Februari</h2>
+        <h2>Diari Jajan Februari 2021</h2>
       </div>
       <div class="col-12">
         <h5>Pengeluaran Bulan Ini Rp {{ totalPengeluaran }}</h5>

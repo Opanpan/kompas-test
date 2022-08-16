@@ -1,6 +1,6 @@
 const state = {
   items: [],
-  totalPengeluaran: 0
+  totalPengeluaran: 0,
 };
 
 const mutations = {
@@ -11,7 +11,9 @@ const mutations = {
         groupingItem.push([]);
         groupingItem[groupingItem.length - 1].push(data[i]);
       } else {
-        if (groupingItem[groupingItem.length - 1][0].tanggal === data[i].tanggal) {
+        if (
+          groupingItem[groupingItem.length - 1][0].tanggal === data[i].tanggal
+        ) {
           groupingItem[groupingItem.length - 1].push(data[i]);
         } else {
           groupingItem.push([]);
@@ -21,6 +23,20 @@ const mutations = {
       state.totalPengeluaran += data[i].pengeluaran;
     }
     state.items = groupingItem;
+  },
+  setAddItem(state, data) {
+    let isContainData = false;
+    for (let i = 0; i < state.items.length; i += 1) {
+      if (state.items[i][0].tanggal === data.tanggal) {
+        state.items[i].push(data);
+        isContainData = true;
+      }
+    }
+    if (!isContainData) {
+      state.items.push([]);
+      state.items[state.items.length - 1].push(data);
+    }
+    state.totalPengeluaran += data.pengeluaran;
   },
 };
 
@@ -35,6 +51,9 @@ const actions = {
     } catch (error) {
       console.log(error);
     }
+  },
+  actionAddItem({ commit }, req) {
+    commit('setAddItem', req);
   },
 };
 

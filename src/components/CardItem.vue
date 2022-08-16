@@ -49,10 +49,11 @@ export default {
   },
   computed: {
     calculateTotal() {
-      if (this.item.length > 1) {
-        return this.item.reduce((x, y) => x.pengeluaran + y.pengeluaran);
+      const parseData = JSON.parse(JSON.stringify(this.item));
+      if (parseData.length > 1) {
+        return parseData.reduce((x, y) => x.pengeluaran + y.pengeluaran);
       } else {
-        return this.item[0].pengeluaran;
+        return parseData[0].pengeluaran;
       }
     },
   },
