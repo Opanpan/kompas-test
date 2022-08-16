@@ -131,7 +131,7 @@ export default {
       const currentDate = new Date();
 
       const req = {
-        jam: '',
+        jam: `${currentDate.getHours()}:${currentDate.getMinutes()}`,
         tanggal: `${currentDate.getDate()} ${
           this.monthNames[currentDate.getMonth()]
         } ${currentDate.getFullYear()}`,
