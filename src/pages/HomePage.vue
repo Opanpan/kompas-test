@@ -11,7 +11,7 @@
 
     <div class="row">
       <div class="col-12">
-        <button type="button" class="btn btn-primary">Tambah Item</button>
+        <modal-item />
       </div>
     </div>
 
@@ -26,11 +26,13 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import CardItem from '../components/CardItem.vue';
+import ModalItem from '../components/ModalItem.vue'
 
 export default {
   name: 'HomePage',
   components: {
     CardItem,
+    ModalItem
   },
   data() {
     return {
