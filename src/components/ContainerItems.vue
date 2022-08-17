@@ -4,7 +4,7 @@
       <h2>{{ item }}</h2>
     </div>
     <div class="col-12">
-      <h5>
+      <h5 class="fst-italic">
         Pengeluaran Bulan Ini
         {{ formatToRupiah(calculateTotal(filterItems)) }}
       </h5>

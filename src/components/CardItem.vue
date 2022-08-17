@@ -12,13 +12,13 @@
       <div class="row">
         <div v-for="(item, i) in item" :key="i">
           <div class="row">
-            <div class="col">
+            <div class="col d-flex justify-content-start">
               <p>{{ item.jam }}</p>
             </div>
-            <div class="col">
+            <div class="col d-flex justify-content-center">
               <p>{{ item.nama }}</p>
             </div>
-            <div class="col">
+            <div class="col d-flex justify-content-end">
               <p>{{ formatToRupiah(item.pengeluaran) }}</p>
             </div>
           </div>
@@ -27,10 +27,10 @@
       </div>
 
       <div class="row">
-        <div class="col">
+        <div class="col d-flex justify-content-end">
           <p class="fw-bold">Total</p>
         </div>
-        <div class="col">
+        <div class="col d-flex justify-content-end">
           <p class="fw-bold">{{ formatToRupiah(calculateTotal) }}</p>
         </div>
       </div>
