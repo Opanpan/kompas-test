@@ -19,7 +19,7 @@
               <p>{{ item.nama }}</p>
             </div>
             <div class="col">
-              <p>Rp {{ item.pengeluaran }}</p>
+              <p>{{ formatToRupiah(item.pengeluaran) }}</p>
             </div>
           </div>
           <hr class="mt-0" />
@@ -31,7 +31,7 @@
           <p class="fw-bold">Total</p>
         </div>
         <div class="col">
-          <p class="fw-bold">Rp {{ calculateTotal }}</p>
+          <p class="fw-bold">{{ formatToRupiah(calculateTotal) }}</p>
         </div>
       </div>
     </div>
@@ -39,8 +39,13 @@
 </template>
 
 <script>
+import mixFunction from '../mixins/mixReusableFunction'
+
 export default {
   name: 'CardItem',
+  mixins: [
+    mixFunction
+  ],
   props: {
     item: {
       type: Object,

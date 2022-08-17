@@ -4,7 +4,10 @@
       <h2>{{ item }}</h2>
     </div>
     <div class="col-12">
-      <h5>Pengeluaran Bulan Ini Rp {{ calculateTotal(filterItems) }}</h5>
+      <h5>
+        Pengeluaran Bulan Ini
+        {{ formatToRupiah(calculateTotal(filterItems)) }}
+      </h5>
     </div>
 
     <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
@@ -18,9 +21,11 @@
 <script>
 import { mapState } from 'vuex';
 import CardItem from '../components/CardItem.vue';
+import mixFunction from '../mixins/mixReusableFunction';
 
 export default {
   name: 'ContainerItems',
+  mixins: [mixFunction],
   components: {
     CardItem,
   },
@@ -40,7 +45,10 @@ export default {
     filterItems() {
       let result = [];
       this.items.forEach((i) => {
-        if (this.groupItems[this.index] === i[0].tanggal.slice(3, i[0].tanggal.length)) {
+        if (
+          this.groupItems[this.index] ===
+          i[0].tanggal.slice(3, i[0].tanggal.length)
+        ) {
           result.push(i);
         }
       });
@@ -49,15 +57,15 @@ export default {
   },
   methods: {
     calculateTotal(val) {
-        let result = 0
-        val.forEach(el => {
-            el.forEach(i => {
-                result += i.pengeluaran
-            })
-        })
-        return result;
-    }
-  }
+      let result = 0;
+      val.forEach((el) => {
+        el.forEach((i) => {
+          result += i.pengeluaran;
+        });
+      });
+      return result;
+    },
+  },
 };
 </script>
 
